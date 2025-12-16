@@ -115,7 +115,9 @@ if (prompt("Password Report:") !== "farid123") {
   window.location.href = "index.html";
 }
 
-let riwayat = JSON.parse(localStorage.getItem('riwayat_pesanan') || '[]');
+let riwayatWeb = JSON.parse(localStorage.getItem('riwayat_pesanan') || '[]');
+let riwayatMobile = JSON.parse(localStorage.getItem('riwayat_pesanan_mobile') || '[]');
+let riwayat = [...riwayatWeb, ...riwayatMobile];
 
 // HITUNG STATISTIK
 function hitungStatistik() {
