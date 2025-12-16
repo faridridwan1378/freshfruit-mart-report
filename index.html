@@ -95,6 +95,7 @@
               <th class="text-white">Waktu</th>
               <th class="text-white">Nama</th>
               <th class="text-white">WA</th>
+              <th class="text-white">Sumber</th>
               <th class="text-white">Produk yang Dipesan</th>
               <th class="text-white">Total</th>
             </tr>
@@ -115,8 +116,8 @@ if (prompt("Password Report:") !== "farid123") {
   window.location.href = "index.html";
 }
 
-let riwayatWeb = JSON.parse(localStorage.getItem('riwayat_pesanan') || '[]');
-let riwayatMobile = JSON.parse(localStorage.getItem('riwayat_pesanan_mobile') || '[]');
+let riwayatWeb = JSON.parse(localStorage.getItem('riwayat_pesanan') || '[]').map(order => ({ ...order, sumber: 'Web' }));
+let riwayatMobile = JSON.parse(localStorage.getItem('riwayat_pesanan_mobile') || '[]').map(order => ({ ...order, sumber: 'Mobile' }));
 let riwayat = [...riwayatWeb, ...riwayatMobile];
 
 // HITUNG STATISTIK
@@ -219,7 +220,7 @@ function renderTabel() {
   tbody.innerHTML = '';
 
   if (riwayat.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted fs-4">Belum ada pesanan masuk</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center py-5 text-muted fs-4">Belum ada pesanan masuk</td></tr>';
     return;
   }
 
@@ -257,6 +258,7 @@ function downloadExcel() {
       "Waktu Pemesanan": p.waktu,
       Nama: p.nama,
       "No WA": p.wa,
+      Sumber: p.sumber,
       "Produk Dipesan": produkStr,
       "Total (Rp)": p.total
     };
