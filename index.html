@@ -120,6 +120,17 @@ let riwayatWeb = JSON.parse(localStorage.getItem('riwayat_pesanan') || '[]').map
 let riwayatMobile = JSON.parse(localStorage.getItem('riwayat_pesanan_mobile') || '[]').map(order => ({ ...order, sumber: 'Mobile' }));
 let riwayat = [...riwayatWeb, ...riwayatMobile];
 
+document.body.insertAdjacentHTML('afterbegin', `
+  <div id="debug-info" style="position:fixed;top:0;left:0;background:#000;color:#fff;padding:10px;z-index:9999;max-width:80%;overflow:auto;">
+    <h3>Debug Info:</h3>
+    <p><strong>Web orders:</strong> ${JSON.stringify(riwayatWeb)}</p>
+    <p><strong>Mobile orders:</strong> ${JSON.stringify(riwayatMobile)}</p>
+    <p><strong>Combined orders:</strong> ${JSON.stringify(riwayat)}</p>
+    <p><strong>All localStorage keys:</strong> ${JSON.stringify(Object.keys(localStorage))}</p>
+    <button onclick="this.parentElement.remove()">Close Debug</button>
+  </div>
+`);
+
 // HITUNG STATISTIK
 function hitungStatistik() {
   const sekarang = new Date();
@@ -240,6 +251,7 @@ function renderTabel() {
         <td><small>${p.waktu}</small></td>
         <td><strong>${p.nama}</strong></td>
         <td><a href="https://wa.me/${p.wa}" class="text-success text-decoration-none fw-bold">${p.wa}</a></td>
+        <td><span class="badge bg-info text-dark">${p.sumber}</span></td>
         <td>${produkHTML}</td>
         <td class="text-danger fw-bold fs-5">Rp ${p.total.toLocaleString()}</td>
       `;
